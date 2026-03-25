@@ -2,10 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Love Tulips</title>
 
-  <!-- GitHub Pages friendly (no external restrictions except fonts) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Playfair+Display&display=swap" rel="stylesheet">
 
   <style>
@@ -14,10 +13,12 @@
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #e8f5e9, #fce4ec);
       overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .container {
       min-height: 100vh;
+      min-height: 100dvh; /* iPhone Safari fix */
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -26,49 +27,48 @@
       color: #4a4a4a;
       position: relative;
       z-index: 2;
-      padding-bottom: 80px;
+      padding: 0 20px calc(80px + env(safe-area-inset-bottom));
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3em;
+      font-size: 2.2em;
       margin-bottom: 10px;
       color: #6d4c41;
     }
 
     p {
-      max-width: 600px;
-      font-size: 1.2em;
-      line-height: 1.6;
+      max-width: 90%;
+      font-size: 1em;
+      line-height: 1.5;
       color: #5d4037;
-      padding: 0 20px;
     }
 
-    /* IMAGE GRID */
+    /* IMAGE GRID MOBILE OPTIMIZED */
     .image-grid {
       position: absolute;
-      top: 50%;
+      top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 90%;
-      height: 90%;
+      width: 95%;
+      height: 60%;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 120px;
-      gap: 15px;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 100px;
+      gap: 10px;
       z-index: 1;
     }
 
     .img-box {
-      border-radius: 20px;
+      border-radius: 16px;
       overflow: hidden;
-      background: rgba(255,255,255,0.2);
-      backdrop-filter: blur(5px);
-      transition: transform 0.4s ease;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(6px);
+      transition: transform 0.3s ease;
     }
 
-    .img-box:hover {
-      transform: scale(1.05);
+    .img-box:active {
+      transform: scale(0.97);
     }
 
     .img-box img {
@@ -77,12 +77,17 @@
       object-fit: cover;
     }
 
+    /* GRID VARIATION */
+    .img-box:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .img-box:nth-child(2) { grid-row: span 2; }
+    .img-box:nth-child(3) { grid-column: span 2; }
+
     /* TULIPS */
     .tulip {
       position: fixed;
       bottom: -100px;
-      width: 20px;
-      height: 60px;
+      width: 16px;
+      height: 50px;
       background: #81c784;
       border-radius: 10px;
       animation: float 10s infinite ease-in;
@@ -92,10 +97,10 @@
     .tulip::before {
       content: '';
       position: absolute;
-      top: -30px;
-      left: -10px;
-      width: 40px;
-      height: 40px;
+      top: -25px;
+      left: -8px;
+      width: 32px;
+      height: 32px;
       background: #f48fb1;
       border-radius: 50% 50% 0 0;
     }
@@ -108,14 +113,6 @@
   </style>
 </head>
 <body>
-
-<!--
-INSTRUCTIONS GITHUB PAGES:
-1. Renomme ce fichier en index.html
-2. Upload dans un repo GitHub
-3. Active GitHub Pages (Settings > Pages)
-4. Remplace les images ci-dessous par tes propres photos (ex: images/1.jpg)
--->
 
 <div class="image-grid">
   <div class="img-box" style="grid-column: span 2; grid-row: span 2;">
@@ -159,7 +156,7 @@ INSTRUCTIONS GITHUB PAGES:
     }, 10000);
   }
 
-  setInterval(createTulip, 500);
+  setInterval(createTulip, 600);
 </script>
 
 </body>
