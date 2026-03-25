@@ -10,11 +10,16 @@
 <style>
 * { box-sizing: border-box; }
 
+html {
+  scroll-snap-type: y mandatory;
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #e8f5e9, #fce4ec);
-  overflow: hidden;
+  overflow-x: hidden; /* IMPORTANT pour Safari */
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* LOCK SCREEN */
@@ -27,7 +32,7 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 10;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease;
 }
 
 .lock.hidden {
@@ -41,14 +46,12 @@ body {
   color: #6d4c41;
 }
 
-/* SLIDER */
 .slider {
   width: 80%;
   height: 50px;
   background: rgba(255,255,255,0.3);
   border-radius: 30px;
   position: relative;
-  overflow: hidden;
 }
 
 .slider-text {
@@ -71,17 +74,11 @@ body {
   transition: transform 0.2s;
 }
 
-/* APP */
-.app {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
+/* SECTIONS (scroll normal iPhone OK) */
 .section {
   height: 100vh;
-  flex-shrink: 0;
+  height: 100dvh;
+  scroll-snap-align: start;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,8 +94,10 @@ h2 {
 p {
   text-align: center;
   color: #5d4037;
+  max-width: 90%;
 }
 
+/* GRID */
 .image-grid {
   width: 100%;
   display: grid;
@@ -154,68 +153,74 @@ p {
 
 <body>
 
-<!-- LOCK SCREEN -->
+<!-- LOCK -->
 <div class="lock" id="lock">
   <h1>💚</h1>
-  <div class="slider" id="slider">
+  <div class="slider">
     <div class="slider-text">glisse pour ouvrir →</div>
     <div class="slider-btn" id="btn"></div>
   </div>
 </div>
 
-<!-- APP -->
-<div class="app" id="app">
-  <div class="section">
-    <div class="image-grid">
-      <div class="img-box"><img src="IMG_7613.jpg"></div>
-      <div class="img-box"><img src="IMG_7611.jpg"></div>
-      <div class="img-box"><img src="IMG_7610.jpg"></div>
-      <div class="img-box"><img src="IMG_7612.jpg"></div>
-    </div>
+<!-- CONTENT -->
+<div class="section">
+  <div class="image-grid">
+    <div class="img-box"><img src="IMG_7613.jpg"></div>
+    <div class="img-box"><img src="IMG_7611.jpg"></div>
+    <div class="img-box"><img src="IMG_7610.jpg"></div>
+    <div class="img-box"><img src="IMG_7612.jpg"></div>
   </div>
+</div>
 
-  <div class="section">
-    <h2>Pour toi 💚</h2>
-    <p>
-      Comme une douce matinée matcha, ton amour apaise mon cœur.
-      Tu es cette chaleur discrète.
-      Je t'aime infiniment.
-    </p>
-  </div>
+<div class="section">
+  <h2>Pour toi 💚</h2>
+  <p>
+    Comme une douce matinée matcha, ton amour apaise mon cœur.
+    Tu es cette chaleur discrète.
+    Je t'aime infiniment.
+  </p>
 </div>
 
 <script>
 const btn = document.getElementById('btn');
 const lock = document.getElementById('lock');
 let startX = 0;
+let unlocked = false;
 
 btn.addEventListener('touchstart', e => {
   startX = e.touches[0].clientX;
 });
 
 btn.addEventListener('touchmove', e => {
+  if (unlocked) return;
+
   let move = e.touches[0].clientX - startX;
-  if (move > 0 && move < 250) {
+
+  if (move > 0 && move < 200) {
     btn.style.transform = `translateX(${move}px)`;
   }
 
-  if (move > 180) {
+  if (move > 160) {
     unlock();
   }
 });
 
+btn.addEventListener('touchend', () => {
+  if (!unlocked) btn.style.transform = `translateX(0px)`;
+});
+
 function unlock() {
+  unlocked = true;
   lock.classList.add('hidden');
   if (navigator.vibrate) navigator.vibrate(20);
 }
 
-/* TULIPS */
 function createTulip() {
-  const tulip = document.createElement('div');
-  tulip.classList.add('tulip');
-  tulip.style.left = Math.random() * window.innerWidth + 'px';
-  document.body.appendChild(tulip);
-  setTimeout(() => tulip.remove(), 12000);
+  const t = document.createElement('div');
+  t.classList.add('tulip');
+  t.style.left = Math.random() * window.innerWidth + 'px';
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 12000);
 }
 
 setInterval(createTulip, 800);
