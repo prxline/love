@@ -11,7 +11,7 @@
 * { box-sizing: border-box; }
 
 html {
-  scroll-snap-type: y proximity; /* snap plus doux */
+  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
 }
 
@@ -20,8 +20,12 @@ body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #e8f5e9, #fce4ec);
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch; /* inertie iPhone */
+  -webkit-overflow-scrolling: touch;
   -webkit-tap-highlight-color: transparent;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 /* LOCK SCREEN */
@@ -35,6 +39,10 @@ body {
   align-items: center;
   z-index: 10;
   transition: opacity 0.5s ease;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 .lock.hidden {
   opacity: 0;
@@ -79,7 +87,7 @@ body {
   height: 100vh;
   height: 100dvh;
   scroll-snap-align: start;
-  scroll-snap-stop: always; /* ralentit le snap */
+  scroll-snap-stop: always;
   display: flex;
   justify-content: center;
   align-items: center;
