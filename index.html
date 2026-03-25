@@ -11,14 +11,16 @@
 * { box-sizing: border-box; }
 
 html {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity; /* snap plus doux */
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #e8f5e9, #fce4ec);
-  overflow-x: hidden; /* IMPORTANT pour Safari */
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* inertie iPhone */
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -34,12 +36,10 @@ body {
   z-index: 10;
   transition: opacity 0.5s ease;
 }
-
 .lock.hidden {
   opacity: 0;
   pointer-events: none;
 }
-
 .lock h1 {
   font-size: 2em;
   margin-bottom: 40px;
@@ -74,11 +74,12 @@ body {
   transition: transform 0.2s;
 }
 
-/* SECTIONS (scroll normal iPhone OK) */
+/* SECTIONS */
 .section {
   height: 100vh;
   height: 100dvh;
   scroll-snap-align: start;
+  scroll-snap-stop: always; /* ralentit le snap */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -187,27 +188,14 @@ const lock = document.getElementById('lock');
 let startX = 0;
 let unlocked = false;
 
-btn.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-});
-
+btn.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
 btn.addEventListener('touchmove', e => {
   if (unlocked) return;
-
   let move = e.touches[0].clientX - startX;
-
-  if (move > 0 && move < 200) {
-    btn.style.transform = `translateX(${move}px)`;
-  }
-
-  if (move > 160) {
-    unlock();
-  }
+  if (move > 0 && move < 200) btn.style.transform = `translateX(${move}px)`;
+  if (move > 160) unlock();
 });
-
-btn.addEventListener('touchend', () => {
-  if (!unlocked) btn.style.transform = `translateX(0px)`;
-});
+btn.addEventListener('touchend', () => { if (!unlocked) btn.style.transform = `translateX(0px)`; });
 
 function unlock() {
   unlocked = true;
@@ -222,7 +210,6 @@ function createTulip() {
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 12000);
 }
-
 setInterval(createTulip, 800);
 </script>
 
