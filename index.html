@@ -10,21 +10,16 @@
   <style>
     * { box-sizing: border-box; }
 
+    html {
+      scroll-snap-type: y mandatory;
+    }
+
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #e8f5e9, #fce4ec);
-      overflow: hidden;
+      overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
-    }
-
-    /* SMOOTH SCROLL APP STYLE */
-    .app {
-      height: 100vh;
-      height: 100dvh;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-      -webkit-overflow-scrolling: touch;
     }
 
     .section {
@@ -84,7 +79,7 @@
     .img-box:nth-child(2) { grid-row: span 2; }
     .img-box:nth-child(3) { grid-column: span 2; grid-row: span 2; }
 
-    /* FADE ANIMATION */
+    /* ANIMATION */
     .fade {
       opacity: 0;
       transform: translateY(20px);
@@ -98,7 +93,7 @@
       }
     }
 
-    /* TULIPS BACKGROUND */
+    /* TULIPS */
     .tulip {
       position: fixed;
       bottom: -100px;
@@ -131,29 +126,25 @@
 </head>
 <body>
 
-<div class="app">
-
-  <!-- SECTION 1 -->
-  <div class="section">
-    <div class="image-grid fade">
-      <div class="img-box"><img src="IMG_7613.jpg"></div>
-      <div class="img-box"><img src="IMG_7611.jpg"></div>
-      <div class="img-box"><img src="IMG_7610.jpg"></div>
-      <div class="img-box"><img src="IMG_7612.jpg"></div>
-    </div>
+<!-- SECTION 1 -->
+<div class="section">
+  <div class="image-grid fade">
+    <div class="img-box"><img src="IMG_7613.jpg"></div>
+    <div class="img-box"><img src="IMG_7611.jpg"></div>
+    <div class="img-box"><img src="IMG_7610.jpg"></div>
+    <div class="img-box"><img src="IMG_7612.jpg"></div>
   </div>
+</div>
 
-  <!-- SECTION 2 -->
-  <div class="section">
-    <h1 class="fade">Pour toi 💚</h1>
-    <p class="fade">
-      Comme une douce matinée matcha, ton amour apaise mon cœur.
-      Tu es cette chaleur discrète, ce calme élégant.
-      Avec toi, tout devient léger.
-      Je t'aime infiniment.
-    </p>
-  </div>
-
+<!-- SECTION 2 -->
+<div class="section">
+  <h1 class="fade">Pour toi 💚</h1>
+  <p class="fade">
+    Comme une douce matinée matcha, ton amour apaise mon cœur.
+    Tu es cette chaleur discrète, ce calme élégant.
+    Avec toi, tout devient léger.
+    Je t'aime infiniment.
+  </p>
 </div>
 
 <script>
